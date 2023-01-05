@@ -3,12 +3,17 @@
  */
 
 const fs = require('fs');
+// const { default: JSDOMEnvironment } = require('jest-environment-jsdom');
 
+const NotesClient = require('./notesClient');
 const NotesModel = require('./notesModel');
 const NotesView = require('./notesView'); 
 
+jest.mock('./notesClient');
+
 describe('Notes view', () => {
   beforeEach(() => {
+    NotesClient.mockClear();
     document.body.innerHTML = fs.readFileSync('./index.html');
   });
 
@@ -78,6 +83,24 @@ describe('Notes view', () => {
     view.displayNotes();
 
     expect(document.querySelectorAll('div.note').length).toEqual(2);
+  });
+
+  it('displays info from the server', () => {
+    // const client = new NotesClient();
+    const model = new NotesModel();
+    const client = {
+      loadNotes: (callback) => callback(['This note is coming from the server'])
+    };
+    const view = new NotesView(model, client);
+
+    // client.loadnotes.mockImplementation(callback => {
+    //   callback(['This note is coming from the server']);
+    // });
+    view.displayNotesFromApi();
+    expect(document.querySelector('div.note').textContent).toEqual('This note is coming from the server')
+
+    // expect(client.loadnotes).toHaveBeenCalled();
+    // expect(model.getNotes()).toEqual(['This note is coming from the server']);
   });
 }); 
 
