@@ -20,16 +20,17 @@ class NotesView {
   }
   
   displayNotes() {
-    document.querySelectorAll('#note').forEach((note) => {
+    document.querySelectorAll('div.note').forEach( note => {
       note.remove();
     });
     const notes = this.model.getNotes()
 
     // For each note, create and append a new element on the main container
     notes.forEach((note) => {
-      const newnote = document.createElement("div");
+      const newnote = document.createElement('div');
       newnote.textContent = note;
-      newnote.className = "note";
+      newnote.className = 'note';
+      document.querySelector('#add-note-input').value = '';
       this.mainContainerEl.append(newnote);
     });
   }

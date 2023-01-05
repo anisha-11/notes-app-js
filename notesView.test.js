@@ -51,6 +51,34 @@ describe('Notes view', () => {
     expect(document.querySelectorAll('div.note').length).toBe(1);
     expect(document.querySelectorAll('div.note')[0].textContent).toEqual('Testing note');
   });
+
+  it('adds 2 notes by button click', () => {
+    const model = new NotesModel();
+    const view = new NotesView(model);
+
+    const inputEl = document.querySelector('#add-note-input');
+    inputEl.value = 'Testing note';
+
+    const buttonEl = document.querySelector('#add-note-button');
+    buttonEl.click();
+    buttonEl.click();
+
+    expect(document.querySelectorAll('div.note').length).toBe(2);
+    expect(document.querySelectorAll('div.note')[0].textContent).toEqual('Testing note');
+  });
+
+  it('clears the list of previous notes before displaying', () => {
+    const model = new NotesModel();
+    const view = new NotesView(model);
+
+    model.addNote('one');
+    model.addNote('two');
+
+    view.displayNotes();
+    view.displayNotes();
+
+    expect(document.querySelectorAll('div.note').length).toEqual(2);
+  });
 }); 
 
     
