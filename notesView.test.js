@@ -12,7 +12,7 @@ describe('Notes view', () => {
     document.body.innerHTML = fs.readFileSync('./index.html');
   });
 
-  xit('displays 0 notes', () => {
+  it('displays 0 notes', () => {
     
 
     // 1. Setting up model and view
@@ -37,4 +37,28 @@ describe('Notes view', () => {
 
     expect(document.querySelectorAll("div.note").length).toBe(2);
   });
-});
+
+  it('adds note by button click', () => {
+    const model = new NotesModel();
+    const view = new NotesView(model);
+
+    const inputEl = document.querySelector('#add-note-input');
+    inputEl.value = 'Testing note';
+
+    const buttonEl = document.querySelector('#add-note-button');
+    buttonEl.click();
+
+    expect(document.querySelectorAll('div.note').length).toBe(1);
+    expect(document.querySelectorAll('div.note')[0].textContent).toEqual('Testing note');
+  });
+}); 
+
+    
+
+    
+
+
+ 
+
+ 
+   
