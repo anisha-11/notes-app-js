@@ -31,4 +31,30 @@ describe('NoteClient class', () => {
       done();
     });
   });
+
+  // it('saves the created note onto the page', () => {
+  //   fetch.mockResponseOnce(JSON.stringify([
+  //     "This note is coming from the server"
+  //   ]));
+
+  //   client.createNote('This note is coming from the server');
+
+  //   expect(fetch).toHaveBeenCalledWith(
+  //     'http://localhost:3000/notes',
+  //     expect.objectContaining({
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({'content': 'This note is coming from the server'}),
+  //     })
+  //   );
+  // });
+
+  it('saves a note to the page', (done) => {
+    const client = new NotesClient();
+    client.createNote('note');
+    expect(fetch.mock.calls.length).toEqual(2)
+    done();
+  })
 });

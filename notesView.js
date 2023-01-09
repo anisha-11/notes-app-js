@@ -9,6 +9,7 @@ class NotesView {
       const newnote = document.querySelector('#add-note-input').value;
       this.model.addNote(newnote);
       this.displayNotes();
+      this.client.createNote(newnote, () => this.displayNotesFromApi())
       document.querySelector('#add-note-input').value = '';
    });
 
@@ -39,7 +40,8 @@ class NotesView {
   displayNotesFromApi() {
     this.client.loadNotes(notes => {
       this.model.setNotes(notes);
-      console.log(this.model.getNotes())
+      this.client.createNote(notes);
+      // console.log(this.model.getNotes())
       this.displayNotes();
     });
   }
